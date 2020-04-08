@@ -32,20 +32,32 @@
   </script> 
 </head> 
 <body class="container-fluid"> 
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Project ELITE</a>
-      </div>
-      <ul class="nav navbar-nav">
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Team Elit</a>
+    </div>
+    <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
+        <li><a href="/diagnose">Diagnose</a></li>
         <li class="active"><a href="#">Predict</a></li>
         <li><a href="/aboutus">About Us</a></li>
       </ul>
     </div>
   </nav>
   <div class="container">
-    <h1>Under Construction</h1>
+    <h1>Predictive Analysis</h1>
+    <form action="/predictapi">
+      <div class="form-group">
+        <label for="name">Enter the name of the loan applier:</label>
+        <input type="text" class="form-control" id="name">
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="decimal" class="form-control" id="Age">
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
   </div>
 </body> 
 </html> 

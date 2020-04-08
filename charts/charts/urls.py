@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from chartjs import views as chartjsviews
 from predictLoan import views as predictviews
+from diagnose import views as diagnoseviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', chartjsviews.HomeView.as_view()),
     path('predict/', predictviews.HomeView.as_view()), 
+    path('diagnose/', diagnoseviews.HomeView.as_view()), 
     path('aboutus/', chartjsviews.AboutUsView.as_view()), 
     # path('test-api', views.get_data), 
-    path('api', chartjsviews.ChartData.as_view())
+    path('api', chartjsviews.ChartData.as_view()),
+    path('predictapi', predictviews.PredictData.as_view())
 ]
