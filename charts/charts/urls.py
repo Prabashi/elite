@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from chartjs import views
+from chartjs import views as chartjsviews
+from predictLoan import views as predictviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.HomeView.as_view()), 
+    path('', chartjsviews.HomeView.as_view()),
+    path('predict/', predictviews.HomeView.as_view()), 
+    path('aboutus/', chartjsviews.AboutUsView.as_view()), 
     # path('test-api', views.get_data), 
-    path('api', views.ChartData.as_view())
+    path('api', chartjsviews.ChartData.as_view())
 ]

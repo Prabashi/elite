@@ -12,24 +12,6 @@
   
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-  
-  
-</head> 
-  
-<body class="container-fluid"> 
-  <center class="row"> 
-    <h1>Classification using <b>Job Data</b></h1> 
-  </center> 
-  <hr /> 
-  <div class="row"> 
-    <div class="col-md-6"> 
-      <canvas id="myChartline"></canvas> 
-    </div> 
-    <div class="col-md-6"> 
-      <canvas id="myChartBar"></canvas> 
-    </div> 
-  </div> 
-  
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
   
   <script> 
@@ -39,8 +21,10 @@
       method: "GET", 
       url: endpoint, 
       success: function(data) { 
-        drawLineGraph(data, 'myChartline'); 
-        drawBarGraph(data, 'myChartBar'); 
+        drawLineGraph(data.age, 'age'); 
+        drawBarGraph(data.marital, 'marital'); 
+        drawBarGraph(data.job, 'job'); 
+        drawBarGraph(data.education, 'education'); 
         console.log("drawing"); 
       }, 
       error: function(error_data) { 
@@ -98,7 +82,7 @@
       var chart2Label = data.chart2Label; 
       var chart2data = data.chart2data; 
 
-      var ctx = document.getElementById("myChartBar").getContext("2d");
+      var ctx = document.getElementById(id).getContext("2d");
 
       var data = {
           labels: labels, 
@@ -132,6 +116,55 @@
     });
     } 
   </script> 
+</head> 
+<body class="container-fluid"> 
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Project ELITE</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="/predict">Predict</a></li>
+      <li><a href="/aboutus">About Us</a></li>
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+    <center class="row"> 
+    <div class="col-md-6"> 
+      <h1>Classification using <b>Job Data</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1>Classification using <b>Marital Data</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="job"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="marital"></canvas> 
+    </div> 
+  </div> 
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1>Classification using <b>Education Data</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1>Classification using <b>Age Data</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="education"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="age"></canvas> 
+    </div> 
+  </div>
+  </div>
 </body> 
-  
 </html> 

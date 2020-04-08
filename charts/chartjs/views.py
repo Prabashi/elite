@@ -16,6 +16,10 @@ import plotly.graph_objects as go
 class HomeView(View): 
     def get(self, request, *args, **kwargs): 
         return render(request, 'chartjs/index.html') 
+
+class AboutUsView(View): 
+    def get(self, request, *args, **kwargs): 
+        return render(request, 'aboutus/index.html') 
    
    
 #################################################### 
@@ -53,23 +57,68 @@ class ChartData(APIView):
         data = {}
         data[labels[0]] = df.loc[df.y==labels[0]]
         data[labels[1]] = df.loc[df.y==labels[1]]
-        x = data[labels[0]]['job'].value_counts().values.tolist()
-        x1 = data[labels[1]]['job'].value_counts().values.tolist()
+
+        job = data[labels[0]]['job'].value_counts().values.tolist()
+        job1 = data[labels[1]]['job'].value_counts().values.tolist()
+        marital = data[labels[0]]['marital'].value_counts().values.tolist()
+        marital1 = data[labels[1]]['marital'].value_counts().values.tolist()
+        education = data[labels[0]]['education'].value_counts().values.tolist()
+        education1 = data[labels[1]]['education'].value_counts().values.tolist()
+        age = data[labels[0]]['age'].value_counts().values.tolist()
+        age1 = data[labels[1]]['age'].value_counts().values.tolist()
 
         job_data = {}
         job_data[labels[0]] = data[labels[0]]['job'].value_counts()
         job_data[labels[1]] = data[labels[1]]['job'].value_counts()
 
-        labels=job_data[labels[0]].index
+        marital_data = {}
+        marital_data[labels[0]] = data[labels[0]]['marital'].value_counts()
+        marital_data[labels[1]] = data[labels[1]]['marital'].value_counts()
+
+        education_data = {}
+        education_data[labels[0]] = data[labels[0]]['education'].value_counts()
+        education_data[labels[1]] = data[labels[1]]['education'].value_counts()
+
+        age_data = {}
+        age_data[labels[0]] = data[labels[0]]['age'].value_counts()
+        age_data[labels[1]] = data[labels[1]]['age'].value_counts()
+
+        labels_jobs=job_data[labels[0]].index
+        labels_marital=marital_data[labels[0]].index
+        labels_education=education_data[labels[0]].index
+        labels_age=age_data[labels[0]].index
+
         chartLabel = df['y'].unique().tolist()[0]
-        chartdata = x
         chart2Label = df['y'].unique().tolist()[1]
-        chart2data = x1
-        data =  { 
-                 "labels":labels, 
-                 "chartLabel":chartLabel, 
-                 "chartdata":chartdata, 
-                 "chart2Label":chart2Label, 
-                 "chart2data":chart2data, 
+
+        data =  {
+                    "job": { 
+                     "labels":labels_jobs, 
+                     "chartLabel":chartLabel, 
+                     "chartdata":job, 
+                     "chart2Label":chart2Label, 
+                     "chart2data":job1, 
+                    },
+                    "marital": { 
+                     "labels":labels_marital, 
+                     "chartLabel":chartLabel, 
+                     "chartdata":marital, 
+                     "chart2Label":chart2Label, 
+                     "chart2data":marital1, 
+                    },
+                    "education": { 
+                     "labels":labels_education, 
+                     "chartLabel":chartLabel, 
+                     "chartdata":education, 
+                     "chart2Label":chart2Label, 
+                     "chart2data":education1, 
+                    },
+                    "age": { 
+                     "labels":labels_age, 
+                     "chartLabel":chartLabel, 
+                     "chartdata":age, 
+                     "chart2Label":chart2Label, 
+                     "chart2data":age1, 
+                    }
                 } 
         return Response(data) 
