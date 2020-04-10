@@ -21,19 +21,333 @@
       method: "GET", 
       url: endpoint, 
       success: function(data) { 
-        drawLineGraph(data.age, 'age'); 
-        drawBarGraph(data.marital, 'marital'); 
-        drawBarGraph(data.job, 'job'); 
-        drawBarGraph(data.education, 'education'); 
-        console.log("drawing"); 
+        drawAgeGraph(data.age, 'age', 'black', 'red'); 
+        drawBarGraph(data.marital, 'marital', "green", "blue"); 
+        drawBarGraph(data.job, 'job', "red", "green"); 
+        drawBarGraph(data.education, 'education', "purple", "green");
+        drawBarGraph(data.loan, 'loan', "red", "green");
+        drawBarGraph(data.default, 'default', "red", "green");
+        drawBarGraph(data.housing, 'housing', "red", "green");
+        drawBarGraph(data.contact, 'contact', "orange", "brown");
+        drawBarGraph(data.outcome, 'outcome', "orange", "yellow"); 
+        drawWeekGraph(data.tseriesweek, 'tseriesweek', "red", "green");
+        drawMonthGraph(data.monthser, 'monthser', "red", "green");
+        drawScatteredGraph(data.durationnorm, 'durationnorm', "red", "green"); 
+        drawScatteredGraph(data.campaign, 'campaign', "black", "red"); 
+        drawScatteredGraph(data.prevcontact, 'prevcontact', "red", "green");
+        drawScatteredGraph(data.pdays, 'pdays', "red", "blue"); 
+        //drawScatteredGraph(data.durationcall, 'durationcall'); 
       }, 
       error: function(error_data) { 
         console.log(error_data); 
       } 
     }) 
+
+    function drawScatteredGraph(data, id, color1, color2) {
+      console.error(data);
+      var ctx = document.getElementById(id).getContext('2d'); 
+      let dx = [{}];
+      let dx1 = [{}];
+
+      for (let i=0; i<data.chartdata.length; i++) {
+        dx.push({x: data.labels[i], y: data.chartdata[i]});
+        dx1.push({x: data.labels[i], y: data.chart2data[i]});
+      }
+
+      dx.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return day1 - day2;
+      });
+
+      dx1.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return day1 - day2;
+      });
+
+      var scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: data.chartLabel,
+                data: dx,
+                backgroundColor: color1,
+            },
+              {
+                  label: data.chart2Label, 
+                  data: dx1,
+                  backgroundColor: color2,
+              }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+    }
+
+    function drawAgeGraph(data, id, color1, color2) {
+      let dx = [{}];
+      let dx1 = [{}];
+
+      for (let i=0; i<data.chartdata.length; i++) {
+        dx.push({x: data.labels[i], y: data.chartdata[i]});
+        dx1.push({x: data.labels[i], y: data.chart2data[i]});
+      }
+
+      dx.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return day1 - day2;
+      });
+
+      dx1.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return day1 - day2;
+      });
+
+      let dataArr = [];
+      let data1Arr = [];
+      let labelArr = [];
+
+      for (let i=1; i<dx.length; i++) {
+        dataArr.push(dx[i].y);
+        data1Arr.push(dx1[i].y);
+        labelArr.push(dx[i].x);
+      }
+
+      // for (let i=0; i<100; i++) {
+      //   if (dx[i]) {
+      //     dataArr.push(dx[i].y); 
+      //     data1Arr.push(dx1[i].y);
+      //   } else {
+      //     dataArr.push(0);
+      //     data1Arr.push(0);
+      //   }
+        
+      //   labelArr.push(i);
+      // }
+
+      var labels = data.labels.sort(); 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data; 
+
+      var ctx = document.getElementById(id).getContext("2d");
+
+      var data = {
+          labels: labelArr, 
+          datasets: [
+              {
+                  label: chartLabel, 
+                  data: dataArr, 
+                  backgroundColor: color1,
+              },
+              {
+                  label: chart2Label, 
+                  data: data1Arr, 
+                  backgroundColor: color2,
+              }
+          ]
+      };
+
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            barValueSpacing: 20,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                    }
+                }]
+            }
+        }
+    });
+    } 
   
+    function drawWeekGraph(data, id, color1, color2) { 
+      let dx = [{}];
+      let dx1 = [{}];
+
+      for (let i=0; i<data.chartdata.length; i++) {
+        dx.push({x: data.labels[i], y: data.chartdata[i]});
+        dx1.push({x: data.labels[i], y: data.chart2data[i]});
+      }
+
+      const sorter = {
+        // "sunday": 0, // << if sunday is first day of week
+        "mon": 1,
+        "tue": 2,
+        "wed": 3,
+        "thu": 4,
+        "fri": 5
+      }
+
+      dx.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return sorter[day1] - sorter[day2];
+      });
+
+      dx1.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return sorter[day1] - sorter[day2];
+      });
+
+      let dataArr = [];
+      let data1Arr = [];
+      let labelArr = [];
+
+      for (let i=1; i<dx.length; i++) {
+        dataArr.push(dx[i].y);
+        data1Arr.push(dx1[i].y);
+        labelArr.push(dx[i].x);
+      }
+
+      console.error(dataArr)
+
+      var labels = data.labels; 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data;
+      var ctx = document.getElementById(id).getContext('2d'); 
+      var chart = new Chart(ctx, { 
+        // The type of chart we want to create 
+        type: 'line', 
   
-    function drawLineGraph(data, id) { 
+        // The data for our dataset 
+        data: { 
+          labels: labelArr, 
+          datasets: [{ 
+            label: chartLabel,
+            borderColor: color1, 
+            data: dataArr, 
+          },{ 
+            label: chart2Label,
+            borderColor: color2, 
+            data: data1Arr, 
+          }] 
+        }, 
+  
+        // Configuration options go here 
+        options: { 
+          scales: { 
+            xAxes: [{ 
+              display: true 
+            }], 
+            yAxes: [{ 
+              ticks: { 
+                beginAtZero: true 
+              } 
+            }] 
+          } 
+        } 
+  
+      }); 
+    } 
+
+    function drawMonthGraph(data, id, color1, color2) { 
+      let dx = [{}];
+      let dx1 = [{}];
+
+      for (let i=0; i<data.chartdata.length; i++) {
+        dx.push({x: data.labels[i], y: data.chartdata[i]});
+        dx1.push({x: data.labels[i], y: data.chart2data[i]});
+      }
+
+      const sorter = {
+        // "sunday": 0, // << if sunday is first day of week
+        "jan": 1,
+        "feb": 2,
+        "mar": 3,
+        "apr": 4,
+        "may": 5,
+        "jun": 6,
+        "jul": 7,
+        "aug": 8,
+        "sep": 9,
+        "oct": 10,
+        "nov": 11,
+        "dec": 12
+      }
+
+      dx.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return sorter[day1] - sorter[day2];
+      });
+
+      dx1.sort(function sortByDay(a, b) {
+        let day1 = a.x;
+        let day2 = b.x;
+        return sorter[day1] - sorter[day2];
+      });
+
+      let dataArr = [];
+      let data1Arr = [];
+      let labelArr = [];
+
+      for (let i=1; i<dx.length; i++) {
+        dataArr.push(dx[i].y);
+        data1Arr.push(dx1[i].y);
+        labelArr.push(dx[i].x);
+      }
+
+      console.error("month "+labelArr)
+
+      var labels = data.labels; 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data;
+      var ctx = document.getElementById(id).getContext('2d'); 
+      var chart = new Chart(ctx, { 
+        // The type of chart we want to create 
+        type: 'line', 
+  
+        // The data for our dataset 
+        data: { 
+          labels: labelArr, 
+          datasets: [{ 
+            label: chartLabel,
+            borderColor: color1, 
+            data: dataArr, 
+          },{ 
+            label: chart2Label,
+            borderColor: color2, 
+            data: data1Arr, 
+          }] 
+        }, 
+  
+        // Configuration options go here 
+        options: { 
+          scales: { 
+            xAxes: [{ 
+              display: true 
+            }], 
+            yAxes: [{ 
+              ticks: { 
+                beginAtZero: true 
+              } 
+            }] 
+          } 
+        } 
+  
+      }); 
+    } 
+
+    function drawLineGraph(data, id, color1, color2) { 
       var labels = data.labels; 
       var chartLabel = data.chartLabel; 
       var chartdata = data.chartdata; 
@@ -49,11 +363,11 @@
           labels: labels, 
           datasets: [{ 
             label: chartLabel,
-            borderColor: 'blue', 
+            borderColor: color1, 
             data: chartdata, 
           },{ 
             label: chart2Label,
-            borderColor: 'green', 
+            borderColor: color2, 
             data: chart2data, 
           }] 
         }, 
@@ -75,7 +389,8 @@
       }); 
     } 
   
-    function drawBarGraph(data, id) { 
+    function drawBarGraph(data, id, color1, color2) { 
+      console.error(data);
       var labels = data.labels; 
       var chartLabel = data.chartLabel; 
       var chartdata = data.chartdata; 
@@ -90,12 +405,12 @@
               {
                   label: chartLabel, 
                   data: chartdata, 
-                  backgroundColor: "blue",
+                  backgroundColor: color1,
               },
               {
                   label: chart2Label, 
                   data: chart2data, 
-                  backgroundColor: "red",
+                  backgroundColor: color2,
               }
           ]
       };
@@ -114,6 +429,76 @@
             }
         }
     });
+    } 
+
+    function drawPieGraph(data, id, color1, color2) { 
+      var labels = data.labels; 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data; 
+
+      var ctx = document.getElementById(id).getContext("2d");
+
+      var data = {
+          labels: labels, 
+          datasets: [
+              {
+                  label: chartLabel, 
+                  data: chartdata, 
+                  backgroundColor: color1,
+              },
+              {
+                  label: chart2Label, 
+                  data: chart2data, 
+                  backgroundColor: color2,
+              }
+          ]
+      };
+
+      var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+          responsive: true
+        }
+      });
+    } 
+
+    function drawRadarGraph(data, id, color1, color2) { 
+      var labels = data.labels; 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data; 
+
+      var ctx = document.getElementById(id).getContext("2d");
+
+      var data = {
+          labels: labels, 
+          datasets: [
+              {
+                  label: chartLabel, 
+                  data: chartdata, 
+                  backgroundColor: color1,
+              },
+              {
+                  label: chart2Label, 
+                  data: chart2data, 
+                  backgroundColor: color2,
+              }
+          ]
+      };
+
+      var myPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+          title: {
+            responsive: true
+          },
+        }
+      });
     } 
   </script> 
 </head> 
@@ -134,10 +519,10 @@
   <div class="container">
     <center class="row"> 
     <div class="col-md-6"> 
-      <h1>Classification using <b>Job Data</b> </h1> 
+      <h1><b>Job Data</b> </h1> 
     </div> 
     <div class="col-md-6"> 
-      <h1>Classification using <b>Marital Data</b></h1> 
+      <h1><b>Marital Data</b></h1> 
     </div> 
   </center> 
   <hr /> 
@@ -151,10 +536,10 @@
   </div> 
   <center class="row"> 
     <div class="col-md-6"> 
-      <h1>Classification using <b>Education Data</b> </h1> 
+      <h1><b>Education Data</b> </h1> 
     </div> 
     <div class="col-md-6"> 
-      <h1>Classification using <b>Age Data</b></h1> 
+      <h1><b>Age Data</b></h1> 
     </div> 
   </center> 
   <hr /> 
@@ -164,6 +549,108 @@
     </div> 
     <div class="col-md-6"> 
       <canvas id="age"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Default Data</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Housing Data</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="default"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="housing"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Loan Data</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Time series analysis</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="loan"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="tseriesweek"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Month</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Call Duration</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="monthser"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="durationnorm"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Contact</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Campaign</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="contact"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="campaign"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Previously Contacted</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Pdays</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="prevcontact"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="pdays"></canvas> 
+    </div> 
+  </div>
+  <center class="row"> 
+    <div class="col-md-6"> 
+      <h1><b>Outcome</b> </h1> 
+    </div> 
+    <div class="col-md-6"> 
+      <h1><b>Outcome</b></h1> 
+    </div> 
+  </center> 
+  <hr /> 
+  <div class="row"> 
+    <div class="col-md-6"> 
+      <canvas id="outcome"></canvas> 
+    </div> 
+    <div class="col-md-6"> 
+      <canvas id="outcome1"></canvas> 
     </div> 
   </div>
   </div>

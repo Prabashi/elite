@@ -15,18 +15,61 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
   
   <script> 
-    var endpoint = '/api'; 
+    var endpoint = '/diagnoseapi'; 
   
     $.ajax({ 
       method: "GET", 
       url: endpoint, 
       success: function(data) { 
-        
+        drawLineGraph(data.tseriesobj, 'tseriesobj', "green", "red"); 
+        drawLineGraph(data.tseriesobjdaily, 'tseriesobjdaily', "green", "red"); 
       }, 
       error: function(error_data) { 
         console.log(error_data); 
       } 
     }) 
+
+    function drawLineGraph(data, id, color1, color2) { 
+      var labels = data.labels; 
+      var chartLabel = data.chartLabel; 
+      var chartdata = data.chartdata; 
+      var chart2Label = data.chart2Label; 
+      var chart2data = data.chart2data;
+      var ctx = document.getElementById(id).getContext('2d'); 
+      var chart = new Chart(ctx, { 
+        // The type of chart we want to create 
+        type: 'line', 
+  
+        // The data for our dataset 
+        data: { 
+          labels: labels, 
+          datasets: [{ 
+            label: chartLabel,
+            borderColor: color1, 
+            data: chartdata, 
+          },{ 
+            label: chart2Label,
+            borderColor: color2, 
+            data: chart2data, 
+          }] 
+        }, 
+  
+        // Configuration options go here 
+        options: { 
+          scales: { 
+            xAxes: [{ 
+              display: true 
+            }], 
+            yAxes: [{ 
+              ticks: { 
+                beginAtZero: true 
+              } 
+            }] 
+          } 
+        } 
+  
+      }); 
+    }
   
 
   </script> 
@@ -35,7 +78,7 @@
   <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Team Elit</a>
+      <a class="navbar-brand" href="#">Team Elite</a>
     </div>
     <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
@@ -46,8 +89,20 @@
     </div>
   </nav>
   <div class="container">
-    <h1>Why</h1>
-    
-  </div>
+    <center class="row"> 
+      <h1><b>Time series - Monthly</b> </h1> 
+    </center> 
+    <hr /> 
+    <div class="row"> 
+        <canvas id="tseriesobj"></canvas> 
+    </div> 
+    <center class="row"> 
+      <h1><b>Time series - Daily</b> </h1> 
+    </center> 
+    <hr /> 
+    <div class="row"> 
+        <canvas id="tseriesobjdaily"></canvas> 
+    </div> 
+  </div> 
 </body> 
 </html> 

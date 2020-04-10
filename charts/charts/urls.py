@@ -27,5 +27,6 @@ urlpatterns = [
     path('aboutus/', chartjsviews.AboutUsView.as_view()), 
     # path('test-api', views.get_data), 
     path('api', chartjsviews.ChartData.as_view()),
-    path('predictapi', predictviews.PredictData.as_view())
+    path('predictapi', predictviews.PredictData.as_view()),
+    path('diagnoseapi', diagnoseviews.DiagnoseData.as_view())
 ]
