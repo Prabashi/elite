@@ -1,0 +1,188 @@
+<!DOCTYPE html> 
+<html lang="en" dir="ltr"> 
+  
+<head> 
+  <meta charset="utf-8"> 
+  <title>chatsjs</title> 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+  
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+  
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
+  
+  <script> 
+    var endpoint = '/predictapi'; 
+  
+    $.ajax({ 
+      method: "GET", 
+      url: endpoint, 
+      success: function(data) { 
+        
+      }, 
+      error: function(error_data) { 
+        console.log(error_data); 
+      } 
+    }) 
+  
+
+  </script> 
+</head> 
+<body class="container-fluid"> 
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Team Elite</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/diagnose">Diagnose</a></li>
+        <li class="active"><a href="#">Predict</a></li>
+        <li><a href="/aboutus">About Us</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Predictive Analysis</h1>
+    <form action="/predictapi">
+      <div class="form-group">
+        <label for="name">Enter the name of the loan applier:</label>
+        <input type="text" class="form-control" id="name">
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="decimal" class="form-control" id="Age">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="age"></label>
+            <button type="submit" class="form-control btn btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body> 
+</html> 
